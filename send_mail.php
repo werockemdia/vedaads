@@ -1,8 +1,8 @@
 <?php
-// send_mail.php
-// Simple backend endpoint to send form submissions as email.
-// NOTE: This uses PHP's mail() function. Your hosting must be configured
-// to send mail; otherwise you'll need an SMTP-based solution.
+// send_mail.php - send form submissions using Microsoft 365 SMTP
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -33,8 +33,8 @@ if ($name === '' || $email === '') {
 }
 
 // Where to send
-$to      = 'vedaads.com@gmail.com';
-$subject = 'New website enquiry: ' . $source;
+$toAddress = 'vedaads.com@gmail.com';
+$subject   = 'New website enquiry: ' . $source;
 
 $lines = [];
 $lines[] = 'Name:    ' . $name;
@@ -48,22 +48,37 @@ if ($website !== '') {
 $lines[] = '';
 $lines[] = '[Submitted from ' . $source . ']';
 
-$body = implode("\n", $lines);
+$bodyText = implode("\n", $lines);
 
-// Basic headers. You can change the From address to a domain mailbox you own.
-$fromAddress = 'no-reply@vedaads.com';
-$fromName    = 'Veda Ads Website';
+// Load Composer's autoloader for PHPMailer
+require __DIR__ . '/vendor/autoload.php';
 
-$headers  = 'From: ' . sprintf('"%s" <%s>', $fromName, $fromAddress) . "\r\n";
-$headers .= 'Reply-To: ' . $email . "\r\n";
-$headers .= 'X-Mailer: PHP/' . phpversion();
+try {
+    $mail = new PHPMailer(true);
 
-$sent = @mail($to, $subject, $body, $headers);
+    // SMTP configuration for Microsoft 365
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.office365.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'connect@vedaads.com';              // your Microsoft 365 mailbox
+    $mail->Password   = getenv('VEDAADS_SMTP_PASSWORD') ?: 'CHANGE_ME_LOCALLY'; // set via env on server
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
 
-if ($sent) {
+    // Sender & recipients
+    $mail->setFrom('connect@vedaads.com', 'Veda Ads Website');
+    $mail->addAddress($toAddress);
+    $mail->addReplyTo($email, $name);
+
+    // Content
+    $mail->isHTML(false);
+    $mail->Subject = $subject;
+    $mail->Body    = $bodyText;
+
+    $mail->send();
+
     echo json_encode(['ok' => true]);
-} else {
+} catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Failed to send email.']);
+    echo json_encode(['ok' => false, 'error' => 'Failed to send email via SMTP.']);
 }
-

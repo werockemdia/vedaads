@@ -3202,9 +3202,9 @@
     .scroll-popup {
       background: #fff;
       border-radius: 24px;
-      max-width: 420px;
+      max-width: 480px;
       width: 100%;
-      padding: 40px 36px;
+      padding: 28px 24px 24px;
       text-align: center;
       box-shadow: 0 32px 64px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
       position: relative;
@@ -3295,7 +3295,7 @@
     .scroll-popup .scroll-popup-skip:hover { color: var(--text); }
     .scroll-popup-form {
       text-align: left;
-      margin-bottom: 20px;
+      margin: 16px 0 20px;
     }
     .scroll-popup-form .scroll-popup-field {
       margin-bottom: 12px;
@@ -3354,6 +3354,7 @@
       display: none;
     }
     .scroll-popup-success.is-visible { display: block; }
+
 
     /* ----- WhatsApp help (floating) ----- */
     .whatsapp-float {
@@ -4855,27 +4856,13 @@
         <li class="trust-badge-item">Free consultation</li>
         <li class="trust-badge-item">No spam</li>
       </ul>
-      <form class="pathfinder-form reveal delay-1" id="path-form" novalidate>
-        <div class="pathfinder-row">
-          <label class="pathfinder-label" for="path-name">Name</label>
-          <input type="text" class="pathfinder-input" id="path-name" name="name" placeholder="Your name" required autocomplete="name">
-        </div>
-        <div class="pathfinder-row">
-          <label class="pathfinder-label" for="path-email">Email</label>
-          <input type="email" class="pathfinder-input" id="path-email" name="email" placeholder="you@company.com" required autocomplete="email">
-        </div>
-        <div class="pathfinder-row">
-          <label class="pathfinder-label" for="path-phone">Mobile number</label>
-          <input type="tel" class="pathfinder-input" id="path-phone" name="phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
-        </div>
-        <div class="pathfinder-row">
-          <label class="pathfinder-label" for="path-website">Website URL</label>
-          <input type="url" class="pathfinder-input" id="path-website" name="website" placeholder="https://yourbrand.com" autocomplete="url">
-        </div>
-        <p class="pathfinder-trust">We reply within 24 hours. No spam, no hard sell.</p>
-        <button type="submit" class="btn pathfinder-btn">Get My Free Growth Plan</button>
-        <p class="pathfinder-success" id="path-success" aria-live="polite" hidden>Thanks! We’ll be in touch soon.</p>
-      </form>
+      <div class="pathfinder-form reveal delay-1">
+        <script src="https://js-na2.hsforms.net/forms/embed/245499898.js" defer></script>
+        <div class="hs-form-frame"
+             data-region="na2"
+             data-form-id="3533119c-0eae-4124-8a9c-d56e1830a756"
+             data-portal-id="245499898"></div>
+      </div>
     </div>
   </section>
   </div>
@@ -4949,26 +4936,13 @@
       <div class="scroll-popup-icon">✨</div>
       <h3 id="scroll-popup-title">Loving what you see?</h3>
       <p>Drop your details and we’ll send you a free growth plan tailored to your brand.</p>
-      <form class="scroll-popup-form" id="scroll-popup-form" novalidate>
-        <div class="scroll-popup-field">
-          <label for="scroll-popup-name">Name</label>
-          <input type="text" id="scroll-popup-name" name="name" placeholder="Your name" required autocomplete="name">
-        </div>
-        <div class="scroll-popup-field">
-          <label for="scroll-popup-email">Email</label>
-          <input type="email" id="scroll-popup-email" name="email" placeholder="you@company.com" required autocomplete="email">
-        </div>
-        <div class="scroll-popup-field">
-          <label for="scroll-popup-phone">Mobile number</label>
-          <input type="tel" id="scroll-popup-phone" name="phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
-        </div>
-        <div class="scroll-popup-field">
-          <label for="scroll-popup-website">Website URL</label>
-          <input type="url" id="scroll-popup-website" name="website" placeholder="https://yourbrand.com" autocomplete="url">
-        </div>
-        <button type="submit" class="scroll-popup-submit">Get My Free Growth Plan</button>
-        <p class="scroll-popup-success" id="scroll-popup-success" aria-live="polite">Thanks! We’ll be in touch soon.</p>
-      </form>
+      <div class="scroll-popup-form">
+        <script src="https://js-na2.hsforms.net/forms/embed/245499898.js" defer></script>
+        <div class="hs-form-frame"
+             data-region="na2"
+             data-form-id="ba8c1d83-d733-46d4-9601-eff2456642b9"
+             data-portal-id="245499898"></div>
+      </div>
       <button type="button" class="scroll-popup-skip" id="scroll-popup-skip">Maybe later</button>
     </div>
   </div>
@@ -5282,6 +5256,24 @@
           });
         });
       }
+
+      // Hide HubSpot virality/branding iframe (small bar iframe) if it appears
+      function hideHubspotViralityIframe() {
+        var viralityIframes = document.querySelectorAll('iframe[src*="embedded-viral-link/forms"]');
+        viralityIframes.forEach(function(iframe) {
+          iframe.style.display = 'none';
+        });
+      }
+      hideHubspotViralityIframe();
+      // HubSpot may inject this iframe after load; check a few times
+      var hideAttempts = 0;
+      var hideInterval = setInterval(function() {
+        hideHubspotViralityIframe();
+        hideAttempts++;
+        if (hideAttempts > 10) {
+          clearInterval(hideInterval);
+        }
+      }, 1000);
 
       // Mobile pricing cards: show more / show less
       var mobilePlanToggles = document.querySelectorAll('.pricing-plan-mobile-toggle');

@@ -60,8 +60,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.office365.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'connect@vedaads.com';              // your Microsoft 365 mailbox
-    $mail->Password   = getenv('VEDAADS_SMTP_PASSWORD') ?: 'CHANGE_ME_LOCALLY'; // set via env on server
+    $mail->Username   = 'connect@vedaads.com'; // your Microsoft 365 mailbox
+    $mail->Password   = 'YOUR_SMTP_PASSWORD_HERE'; // app password / real password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 

@@ -126,14 +126,14 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: 18px 32px;
+      padding: 14px 20px;
       background: rgba(10, 10, 11, 0.95);
       backdrop-filter: saturate(180%) blur(16px);
       -webkit-backdrop-filter: saturate(180%) blur(16px);
       border-bottom: 1px solid rgba(255,255,255,0.1);
       transition: padding 0.3s, background 0.3s;
     }
-    .nav.scrolled { padding: 14px 32px; background: rgba(10, 10, 11, 0.98); }
+    .nav.scrolled { padding: 10px 20px; background: rgba(10, 10, 11, 0.98); }
     .nav-inner {
       max-width: var(--section-max);
       margin: 0 auto;
@@ -175,7 +175,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
       list-style: none;
     }
     .nav-links a {
@@ -311,10 +311,8 @@
       .hero { padding: 100px 24px 60px; }
       .hero-inner {
         grid-template-columns: 1fr;
-        text-align: center;
         gap: 48px;
       }
-      .hero-left { align-items: center; }
       .hero-avatars { justify-content: center; }
       .hero-brands { justify-content: center; }
       .hero-grid { display: none; }
@@ -324,6 +322,24 @@
       flex-direction: column;
       align-items: flex-start;
       z-index: 2;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        padding: 96px 16px 32px;
+      }
+      .hero-inner {
+        text-align: center;
+        gap: 16px;
+      }
+      .hero-left {
+        align-items: center;
+      }
+      .hero-tag,
+      .hero-sub,
+      .hero-cta-wrap,
+      .hero-flying-row {
+        text-align: center;
+      }
     }
     .hero-avatars {
       display: flex;
@@ -1254,13 +1270,43 @@
       border-top: 1px solid rgba(0,0,0,0.06);
     }
     @media (max-width: 640px) {
-      .service-card-body { grid-template-columns: 80px 1fr; gap: 16px; }
-      .service-card:hover .service-card-body { grid-template-columns: 1fr; }
-      .service-card-img { order: -1; min-height: 180px; aspect-ratio: 16/10; }
-      .service-card:hover .service-card-img { min-height: 200px; }
-      .service-card { padding: 20px 20px 20px 20px; }
-      .service-card-content { padding-right: 0; }
-      .service-card .card-icon { top: 0; right: 0; width: 36px; height: 36px; font-size: 1.25rem; }
+      .services-list {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 8px;
+        scroll-snap-type: x mandatory;
+      }
+      .services-list::-webkit-scrollbar {
+        display: none;
+      }
+      .service-card {
+        min-width: 88vw;
+        scroll-snap-align: center;
+        padding: 20px;
+      }
+      .service-card-body {
+        display: block;
+      }
+      .service-card-img {
+        order: -1;
+        min-height: 160px;
+        aspect-ratio: 16/10;
+        margin-bottom: 12px;
+      }
+      .service-card:hover .service-card-img {
+        min-height: 180px;
+      }
+      .service-card-content {
+        padding-right: 0;
+      }
+      .service-card .card-icon {
+        top: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+      }
     }
     .service-card-expanded .expanded-right {
       display: flex;
@@ -1426,6 +1472,14 @@
       transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .split-img:hover img { transform: scale(1.08); }
+    @media (max-width: 640px) {
+      .split--about {
+        padding: 40px 16px 32px;
+      }
+      .split--about .split-img {
+        display: none;
+      }
+    }
     .split h2 {
       font-family: var(--heading-font);
       font-size: clamp(2rem, 3.5vw, 2.75rem);
@@ -2535,6 +2589,89 @@
       padding: 14px 20px;
       border-bottom: 1px solid rgba(15, 23, 42, 0.06);
     }
+
+    .pricing-plans-mobile {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .pricing-matrix-wrap {
+        display: none;
+      }
+      .pricing-plans-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 8px;
+      }
+      .pricing-plan-mobile {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 16px 18px 18px;
+        box-shadow: 0 4px 18px rgba(15,23,42,0.08);
+        border: 1px solid rgba(15,23,42,0.06);
+      }
+      .pricing-plan-mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .pricing-plan-mobile-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .pricing-plan-mobile-price {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+      .pricing-plan-mobile-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+      .pricing-plan-mobile-list {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0 0 10px 0;
+        padding-left: 18px;
+      }
+      .pricing-plan-mobile-list li + li {
+        margin-top: 4px;
+      }
+      .pricing-plan-mobile-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        font-size: 0.85rem;
+      }
+      .pricing-plan-mobile.popular {
+        border-color: rgba(79,70,229,0.4);
+        box-shadow: 0 6px 24px rgba(79,70,229,0.2);
+      }
+      .pricing-plan-mobile-extra {
+        display: none;
+        margin-top: 6px;
+      }
+      .pricing-plan-mobile.show-extra .pricing-plan-mobile-extra {
+        display: block;
+      }
+      .pricing-plan-mobile-toggle {
+        display: inline-flex;
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+        color: var(--accent);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
     .pricing-matrix .pricing-cat-row:hover {
       background: rgba(15, 23, 42, 0.04);
     }
@@ -3266,19 +3403,43 @@
         left: 0;
         right: 0;
         flex-direction: column;
-        padding: 24px;
+        padding: 28px 24px 56px;
+        gap: 14px;
         background: rgba(10,10,11,0.98);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .nav-links.open li {
+        margin-bottom: 4px;
+      }
+      .nav-links.open li:last-child {
+        margin-bottom: 0;
+      }
+      .nav-links a {
+        background: transparent;
+        border-radius: 0;
+        padding: 12px 0;
+      }
+      .nav-links a:hover {
+        background: transparent;
+        transform: none;
       }
       .nav-toggle {
         display: block;
         background: none;
         border: none;
         color: #ffffff;
-        font-size: 1.5rem;
+        font-size: 1.9rem;
         cursor: pointer;
-        padding: 8px;
+        padding: 4px;
+      }
+    }
+
+    /* Global section padding tweak for mobile */
+    @media (max-width: 640px) {
+      section {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
       }
     }
   </style>
@@ -3338,11 +3499,7 @@
         <span class="brand-logo"><img src="images/viraasi-official-logo.png" alt="Viraasi"></span>
         <span class="brand-logo"><img src="images/web-logo-png.png" alt="Jhauri"></span>
       </div>
-      <ul class="trust-badges trust-badges--hero">
-        <li class="trust-badge-item">Free growth plan</li>
-        <li class="trust-badge-item">No commitment</li>
-        <li class="trust-badge-item">24hr reply</li>
-      </ul>
+      
     </div>
     <div class="hero-grid is-slider" aria-label="Featured results" role="region">
       <div class="hero-grid-item is-active"><img src="images/6.jpg" alt=""></div>
@@ -3695,10 +3852,7 @@
           <li class="trust-badge-item">Quality assured</li>
            
         </ul>
-        <a href="#contact" class="showcase-cta">
-          See Our Work in Action
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+       
       </div>
       <div class="showcase-scroll">
         <div class="showcase-card reveal">
@@ -4308,6 +4462,94 @@
         <li class="trust-badge-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No hidden fees</li>
         <li class="trust-badge-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Cancel anytime</li>
       </ul>
+      <div class="pricing-plans-mobile reveal">
+        <div class="pricing-plan-mobile">
+          <div class="pricing-plan-mobile-header">
+            <span class="pricing-plan-mobile-name">Launch</span>
+            <span class="pricing-plan-mobile-price">₹34,000</span>
+          </div>
+          <div class="pricing-plan-mobile-meta">12% ad spend after ₹1,70,000+ / month</div>
+          <ul class="pricing-plan-mobile-list">
+            <li>Meta Ads management</li>
+            <li>Audience research &amp; ICP building</li>
+            <li>Analytics &amp; attribution setup</li>
+          </ul>
+          <button type="button" class="pricing-plan-mobile-toggle" data-toggle-text="Show less">Show more</button>
+          <div class="pricing-plan-mobile-extra">
+            <ul class="pricing-plan-mobile-list">
+              <li>Setup of core tracking (pixels, events, conversions)</li>
+              <li>Baseline creative iterations for key campaigns</li>
+              <li>Monthly performance review</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn btn-primary pricing-plan-mobile-cta">Show Us How To Scale</a>
+        </div>
+        <div class="pricing-plan-mobile">
+          <div class="pricing-plan-mobile-header">
+            <span class="pricing-plan-mobile-name">Growth</span>
+            <span class="pricing-plan-mobile-price">₹47,000</span>
+          </div>
+          <div class="pricing-plan-mobile-meta">+9% ad spend after ₹2,80,000+ / month</div>
+          <ul class="pricing-plan-mobile-list">
+            <li>Meta &amp; Google Ads</li>
+            <li>Audience research &amp; offer testing</li>
+            <li>Analytics, attribution &amp; reporting</li>
+          </ul>
+          <button type="button" class="pricing-plan-mobile-toggle" data-toggle-text="Show less">Show more</button>
+          <div class="pricing-plan-mobile-extra">
+            <ul class="pricing-plan-mobile-list">
+              <li>Google Ads search &amp; shopping campaigns</li>
+              <li>Landing page recommendations for key funnels</li>
+              <li>Monthly reporting plus key experiment roadmap</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn btn-primary pricing-plan-mobile-cta">Show Us How To Scale</a>
+        </div>
+        <div class="pricing-plan-mobile popular">
+          <div class="pricing-plan-mobile-header">
+            <span class="pricing-plan-mobile-name">Scale</span>
+            <span class="pricing-plan-mobile-price">₹73,000</span>
+          </div>
+          <div class="pricing-plan-mobile-meta">+3% ad spend after ₹4,40,000+ / month · Most popular</div>
+          <ul class="pricing-plan-mobile-list">
+            <li>Meta &amp; Google Ads</li>
+            <li>Email &amp; WhatsApp marketing</li>
+            <li>Dedicated account manager</li>
+          </ul>
+          <button type="button" class="pricing-plan-mobile-toggle" data-toggle-text="Show less">Show more</button>
+          <div class="pricing-plan-mobile-extra">
+            <ul class="pricing-plan-mobile-list">
+              <li>Offer creation &amp; scaling support</li>
+              <li>Full-funnel analytics &amp; attribution setup</li>
+              <li>Weekly reporting &amp; creative testing cadence</li>
+              <li>Retention flows across email &amp; WhatsApp</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn btn-primary pricing-plan-mobile-cta">Show Us How To Scale ✨</a>
+        </div>
+        <div class="pricing-plan-mobile">
+          <div class="pricing-plan-mobile-header">
+            <span class="pricing-plan-mobile-name">Partner</span>
+            <span class="pricing-plan-mobile-price">₹105,000</span>
+          </div>
+          <div class="pricing-plan-mobile-meta">+5% ad spend after ₹7,40,000+ / month</div>
+          <ul class="pricing-plan-mobile-list">
+            <li>Full-funnel growth partner</li>
+            <li>Amazon account management</li>
+            <li>Advanced testing &amp; scale roadmap</li>
+          </ul>
+          <button type="button" class="pricing-plan-mobile-toggle" data-toggle-text="Show less">Show more</button>
+          <div class="pricing-plan-mobile-extra">
+            <ul class="pricing-plan-mobile-list">
+              <li>Creative &amp; UGC strategy for new markets</li>
+              <li>Landing page &amp; CRO recommendations</li>
+              <li>Custom reporting views for your team</li>
+              <li>Strategic quarterly planning sessions</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn btn-primary pricing-plan-mobile-cta">Show Us How To Scale</a>
+        </div>
+      </div>
       <div class="pricing-matrix-wrap reveal">
         <table class="pricing-matrix">
           <thead>
@@ -4749,6 +4991,16 @@
       window.addEventListener('load', reveal);
       reveal();
 
+      // Close mobile nav when a link is clicked
+      var navLinksEl = document.querySelector('.nav-links');
+      if (navLinksEl) {
+        navLinksEl.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navLinksEl.classList.remove('open');
+          });
+        });
+      }
+
       // Hero image slider (auto-play only)
       var heroGrid = document.querySelector('.hero-grid.is-slider');
       if (heroGrid) {
@@ -4827,7 +5079,7 @@
       var testimonialsTrack = document.getElementById('testimonials-track');
       if (testimonialsTrack) {
         var testPaused = false;
-        var testSpeed = 0.06;
+        var testSpeed = 0.2;
         function testAutoScroll() {
           if (testPaused) {
             requestAnimationFrame(testAutoScroll);
@@ -4860,30 +5112,52 @@
         nav.classList.toggle('scrolled', window.scrollY > 60);
       });
 
-      // Path form
+      // Path form (main contact) – send via AJAX to send_mail.php
       var pathForm = document.getElementById('path-form');
       if (pathForm) {
         pathForm.addEventListener('submit', function(e) {
           e.preventDefault();
           var nameEl = document.getElementById('path-name');
           var emailEl = document.getElementById('path-email');
-          var sel = document.getElementById('path-select');
+          var phoneEl = document.getElementById('path-phone');
+          var websiteEl = document.getElementById('path-website');
           var successEl = document.getElementById('path-success');
-          pathForm.querySelectorAll('.pathfinder-input, .path-select').forEach(function(el) { el.classList.remove('error'); });
+          pathForm.querySelectorAll('.pathfinder-input').forEach(function(el) { el.classList.remove('error'); });
           var name = nameEl && nameEl.value.trim();
           var email = emailEl && emailEl.value.trim();
+          var phone = phoneEl && phoneEl.value.trim();
+          var website = websiteEl && websiteEl.value.trim();
           var valid = true;
           if (!name) { if (nameEl) nameEl.classList.add('error'); valid = false; }
           if (!email) { if (emailEl) emailEl.classList.add('error'); valid = false; }
-          if (!sel.value) { sel.classList.add('error'); valid = false; }
           if (!valid) return;
-          var situationText = sel.options[sel.selectedIndex].text;
-          var body = 'Name: ' + (name || '') + '\nEmail: ' + (email || '') + '\n\nSituation: ' + situationText;
-          window.location.href = 'mailto:hello@vedaads.com?subject=Free%20Growth%20Plan%20Request&body=' + encodeURIComponent(body);
-          if (successEl) {
-            successEl.hidden = false;
-            successEl.setAttribute('aria-live', 'polite');
-          }
+
+          var formData = new FormData();
+          formData.append('name', name);
+          formData.append('email', email);
+          if (phone) formData.append('phone', phone);
+          if (website) formData.append('website', website);
+          formData.append('source', 'main-form');
+
+          fetch('send_mail.php', {
+            method: 'POST',
+            body: formData
+          }).then(function(res) {
+            if (!res.ok) throw new Error('Network error');
+            return res.json();
+          }).then(function(data) {
+            if (data.ok) {
+              if (successEl) {
+                successEl.hidden = false;
+                successEl.setAttribute('aria-live', 'polite');
+              }
+              pathForm.reset();
+            } else {
+              alert('There was a problem sending your message. Please try again.');
+            }
+          }).catch(function() {
+            alert('There was a problem sending your message. Please try again.');
+          });
         });
       }
 
@@ -4957,6 +5231,7 @@
           }
         });
       });
+      // Scroll popup form – send via AJAX to send_mail.php
       var scrollPopupForm = document.getElementById('scroll-popup-form');
       var scrollPopupSuccess = document.getElementById('scroll-popup-success');
       if (scrollPopupForm) {
@@ -4975,17 +5250,47 @@
           if (!name) { if (nameEl) nameEl.classList.add('error'); valid = false; }
           if (!email) { if (emailEl) emailEl.classList.add('error'); valid = false; }
           if (!valid) return;
-          var body = 'Name: ' + name + '\nEmail: ' + email;
-          if (phone) body += '\nMobile: ' + phone;
-          if (website) body += '\nWebsite: ' + website;
-          body += '\n\n[Submitted from scroll popup]';
-          window.location.href = 'mailto:connect@vedaads.com?subject=Free%20Growth%20Plan%20(Popup)&body=' + encodeURIComponent(body);
-          if (scrollPopupSuccess) {
-            scrollPopupSuccess.classList.add('is-visible');
-            scrollPopupForm.querySelectorAll('input, button[type=submit]').forEach(function(el) { el.disabled = true; });
-          }
+
+          var formDataPopup = new FormData();
+          formDataPopup.append('name', name);
+          formDataPopup.append('email', email);
+          if (phone) formDataPopup.append('phone', phone);
+          if (website) formDataPopup.append('website', website);
+          formDataPopup.append('source', 'scroll-popup');
+
+          fetch('send_mail.php', {
+            method: 'POST',
+            body: formDataPopup
+          }).then(function(res) {
+            if (!res.ok) throw new Error('Network error');
+            return res.json();
+          }).then(function(data) {
+            if (data.ok) {
+              if (scrollPopupSuccess) {
+                scrollPopupSuccess.classList.add('is-visible');
+              }
+              scrollPopupForm.querySelectorAll('input, button[type=submit]').forEach(function(el) { el.disabled = true; });
+            } else {
+              alert('There was a problem sending your message. Please try again.');
+            }
+          }).catch(function() {
+            alert('There was a problem sending your message. Please try again.');
+          });
         });
       }
+
+      // Mobile pricing cards: show more / show less
+      var mobilePlanToggles = document.querySelectorAll('.pricing-plan-mobile-toggle');
+      mobilePlanToggles.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var card = btn.closest('.pricing-plan-mobile');
+          if (!card) return;
+          var expanded = card.classList.toggle('show-extra');
+          var defaultText = 'Show more';
+          var altText = btn.getAttribute('data-toggle-text') || 'Show less';
+          btn.textContent = expanded ? altText : defaultText;
+        });
+      });
     })();
   </script>
 

@@ -3443,6 +3443,33 @@
         padding-bottom: 40px !important;
       }
     }
+
+    /* Hide HubSpot virality/branding bar when injected on our page (loads with delay) */
+    #hs-form-virality-container {
+      display: none !important;
+    }
+
+    /* Cover HubSpot virality bar inside iframe (bottom 48px) – works without HubSpot paid option */
+    .pathfinder-form .hs-form-frame,
+    .scroll-popup-form .hs-form-frame {
+      position: relative;
+      overflow: hidden;
+    }
+    .pathfinder-form .hs-form-frame::after,
+    .scroll-popup-form .hs-form-frame::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 58px;
+      background: #fff;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .scroll-popup-form .hs-form-frame::after {
+      background: #fff;
+    }
   </style>
 </head>
 <body>
@@ -4851,11 +4878,7 @@
     <div class="pathfinder-inner">
       <h2 class="reveal">Ready to Scale?</h2>
       <p class="pathfinder-sub reveal">Tell us a bit about you and your goals. We’ll send a custom plan within 24 hours.</p>
-      <ul class="trust-badges trust-badges--light reveal">
-        <li class="trust-badge-item">24hr response</li>
-        <li class="trust-badge-item">Free consultation</li>
-        <li class="trust-badge-item">No spam</li>
-      </ul>
+     
       <div class="pathfinder-form reveal delay-1">
         <script src="https://js-na2.hsforms.net/forms/embed/245499898.js" defer></script>
         <div class="hs-form-frame"
@@ -4863,6 +4886,11 @@
              data-form-id="3533119c-0eae-4124-8a9c-d56e1830a756"
              data-portal-id="245499898"></div>
       </div>
+      <ul class="trust-badges trust-badges--light reveal">
+        <li class="trust-badge-item">24hr response</li>
+        <li class="trust-badge-item">Free consultation</li>
+        <li class="trust-badge-item">No spam</li>
+      </ul>
     </div>
   </section>
   </div>
@@ -4933,8 +4961,8 @@
   <div class="scroll-popup-overlay" id="scroll-popup" role="dialog" aria-modal="true" aria-labelledby="scroll-popup-title">
     <div class="scroll-popup">
       <button type="button" class="scroll-popup-close" id="scroll-popup-close" aria-label="Close">×</button>
-      <div class="scroll-popup-icon">✨</div>
-      <h3 id="scroll-popup-title">Loving what you see?</h3>
+      
+      <h3 id="scroll-popup-title">Ready to Scale?</h3>
       <p>Drop your details and we’ll send you a free growth plan tailored to your brand.</p>
       <div class="scroll-popup-form">
         <script src="https://js-na2.hsforms.net/forms/embed/245499898.js" defer></script>
@@ -5257,23 +5285,28 @@
         });
       }
 
-      // Hide HubSpot virality/branding iframe (small bar iframe) if it appears
-      function hideHubspotViralityIframe() {
-        var viralityIframes = document.querySelectorAll('iframe[src*="embedded-viral-link/forms"]');
-        viralityIframes.forEach(function(iframe) {
-          iframe.style.display = 'none';
+      // Hide HubSpot virality/branding (container + iframe) when injected on our page (often delayed)
+      function hideHubspotVirality() {
+        var container = document.getElementById('hs-form-virality-container');
+        if (container) container.style.display = 'none';
+        document.querySelectorAll('iframe[src*="embedded-viral-link/forms"]').forEach(function(el) {
+          el.style.display = 'none';
         });
       }
-      hideHubspotViralityIframe();
-      // HubSpot may inject this iframe after load; check a few times
+      hideHubspotVirality();
+      // Run repeatedly for delayed injection (e.g. after HubSpot form script loads)
       var hideAttempts = 0;
       var hideInterval = setInterval(function() {
-        hideHubspotViralityIframe();
+        hideHubspotVirality();
         hideAttempts++;
-        if (hideAttempts > 10) {
-          clearInterval(hideInterval);
-        }
-      }, 1000);
+        if (hideAttempts > 30) clearInterval(hideInterval);
+      }, 500);
+      // Also watch for DOM changes so we hide it the moment it appears
+      if (typeof MutationObserver !== 'undefined') {
+        var obs = new MutationObserver(function() { hideHubspotVirality(); });
+        obs.observe(document.body, { childList: true, subtree: true });
+        setTimeout(function() { obs.disconnect(); }, 15000);
+      }
 
       // Mobile pricing cards: show more / show less
       var mobilePlanToggles = document.querySelectorAll('.pricing-plan-mobile-toggle');
